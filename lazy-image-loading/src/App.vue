@@ -1,11 +1,33 @@
 <template>
-<div>
-      <div>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <h1>dd</h1>
+  <div>
         <!-- loadItemSet is 2 so itemSet is 1,2 -->
-        <div v-for="itemSet in loadItemSet" :key="itemSet" :ref="'parentContainer' + itemSet" class="parent-container">
-          <img-component :restaurantsDetail='restaurantsDetail' :onScreenParentElement="onScreenParentElement"></img-component>  
-        </div>
-      </div>
+    <div v-for="itemSet in loadItemSet" :key="itemSet" :ref="'parentContainer' + itemSet" class="parent-container">
+      <img-component :restaurantsDetail='restaurantsDetail' :onScreenParentElement="onScreenParentElement"></img-component>  
+    </div>
   </div>
 </template>
 
@@ -20,20 +42,24 @@ export default {
   mounted() {
     const option = {
       root: null,
-      threshold: 1,
-      // rootMargin: "-150px"
+      threshold: 0,
+      // rootMargin: "150px"
     }
     const observer = new IntersectionObserver((entries, observer)=>{
       entries.forEach(entry=>{
       if(!entry.isIntersecting){
          console.log("not on screen");
-      } else{ 
+         console.log(entry.target);
+      } else{
+        this.onScreenParentElement = entry.target; 
       this.loadItemSet += 2;   //for refs
       console.log("on screen item",this.loadItemSet, this.$refs,entry.target,entries);
       this.$nextTick(() => {                          //wait to get new render data
          addMoreItems(this.loadItemSet,this.$refs);
       });
-      // addMoreItems(this.loadItemSet,this.$refs);
+      
+      console.log("unobserve");
+      console.log(this.onScreenParentElement);
       observer.unobserve(entry.target);
       }    
     });

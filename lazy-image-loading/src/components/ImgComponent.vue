@@ -3,9 +3,7 @@
         <div class="container">
             <div v-for="(restaurantDetail, index) in restaurantsDetail" :key="restaurantDetail.id"  class="sub-container sub-container-first" :ref="'container'+index" @mouseover="containerHover(index)" @mouseout="containerNormal(index)">
                 <div class="image-holder">
-                    <!-- <div class="image-container"> -->
-                    <img class="image-adjust" alt="Restaurant Card" :src="restaurantDetail.image" loading="lazy">
-                    <!-- </div> -->
+                    <img class="image-adjust" alt="Restaurant Card" :data-src="restaurantDetail.image" loading="lazy">
                     <div v-if="restaurantDetail" class="promoted">
                         <p>promoted</p>
                     </div>
@@ -77,7 +75,16 @@ export default {
     },
     watch:{
         onScreenParentElement(newElement){
-            console.log(newElement.children);
+            console.log("ImageComponent");
+            console.log(newElement.firstChild.firstChild.children);  //3 image comp of one row
+            let rowImages = newElement.firstChild.firstChild.children;
+            for(let i= 0;i<rowImages.length;i++){
+                console.log("hii",rowImages[i]);    //subcontainer
+                let imgElement = rowImages[i].firstChild.firstChild;
+                // console.log(imgElement.getAttribute('data-src'));
+                imgElement.src = imgElement.getAttribute('data-src');
+                // imgElement.removeAttribute("data-src")
+            }
         }
     }
 }
